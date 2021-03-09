@@ -5,10 +5,5 @@ require 'octokit'
 
 client = Octokit::Client.new(:access_token => @token)
 
-repos = client.repositories(@name)
-
-repos.each do |repo|
-  puts "name: #{repo.name}, language: #{repo.language}"
-  puts "url: #{repo.url}"
-  puts ""
-end
+events = client.repository_issue_events(:repo => 'TIL', :user => @name)
+p events[0]
