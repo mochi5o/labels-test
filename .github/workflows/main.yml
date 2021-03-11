@@ -16,6 +16,8 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
+          targets: '対応中, 依頼中, needs_review'
+          token: ${{ secrets.ACCESS_TOKEN }}
           who-to-greet: 'Mona the Octocat'
       # 「hello」ステップの出力を使用する
       - name: Get the output time
