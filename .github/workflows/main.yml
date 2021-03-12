@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create Comment
-        run: echo "${{ steps.Checkout.time }}"
+        run: |
+          echo "${{ steps.Checkout.time }}"
 
       - name: POST Comment
         env:
