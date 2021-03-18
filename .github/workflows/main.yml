@@ -14,14 +14,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Create Comment
-        run: |
-          # echo "${{ steps.Checkout.time }}"
-          echo "test comments" >> commenmt
-
-      - name: POST Comment
+      - name: Create and post Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           URL: ${{ github.event.issue.comments_url }}
         run: |
-          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$(cat comment)\"}" ${URL}
+          comments="$GITHUB_API_URL"
+          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$comments\" ${URL}
