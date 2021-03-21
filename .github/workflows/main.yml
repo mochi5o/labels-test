@@ -17,10 +17,11 @@ jobs:
       - name: Create Comment
         run: |
           echo "test comments"
+          $comment=${{ steps.date.outputs.date }}
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           URL: ${{ github.event.issue.comments_url }}
         run: |
           comments="$GITHUB_API_URL"
-          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$(cat comment)\"}" ${URL}
+          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$URL"}" ${URL}
