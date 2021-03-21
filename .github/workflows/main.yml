@@ -13,12 +13,12 @@ jobs:
       # リポジトリをチェックアウトする
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Get current date
+      - name: Get current date-time
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
       - name: Create Comment
         run: |
-          echo "test comments"
+          label_name=${{ github.event.label.name }}
           comment=${{ steps.date.outputs.date }}
           echo $comment
       - name: POST Comment
@@ -27,4 +27,4 @@ jobs:
           URL: ${{ github.event.issue.comments_url }}
         run: |
           comments="$GITHUB_API_URL"
-          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$URL\"}" ${URL}
+          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$comment $label_name\"}" ${URL}
