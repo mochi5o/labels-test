@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       (github.event.label.name == '対応中') || (github.event.label.name == '依頼中')
-    name: A job to say hello
+    name: Recording label's add or remove time
     steps:
       # リポジトリをチェックアウトする
       - name: Checkout
@@ -16,15 +16,11 @@ jobs:
       - name: Get current date-time
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
-      - name: Create Comment
-        run: |
-          label_name=${{ github.event.label.name }}
-          comment=${{ steps.date.outputs.date }}
-          echo $comment
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           URL: ${{ github.event.issue.comments_url }}
+          LABEL_NAME: ${{ github.event.label.name }}
         run: |
           comments="$GITHUB_API_URL"
-          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$comment $label_name\"}" ${URL}
+          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"${{ steps.date.outputs.date }}\n$LABEL_NAME\"}" ${URL}
