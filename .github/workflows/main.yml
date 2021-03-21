@@ -14,13 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Create and post Comment
+      - name: Create Comment
+        run: |
+          echo "test comments"
+      - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           URL: ${{ github.event.issue.comments_url }}
         run: |
-          url=$GITHUB_API_URL
-          echo "RUL is $url"
-          curl \
-            -H "Accept: application/vnd.github.mockingbird-preview+json" \
-            $url/timeline
+          comments="$GITHUB_API_URL"
+          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"$(cat comment)\"}" ${URL}
