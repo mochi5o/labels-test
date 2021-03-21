@@ -10,7 +10,10 @@ jobs:
       (github.event.label.name == '対応中') || (github.event.label.name == '依頼中')
     name: Recording label's add or remove time
     steps:
-      # リポジトリをチェックアウトする
+      - name: Setup timezone
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: Asia/Tokyo
       - name: Checkout
         uses: actions/checkout@v2
       - name: Get current date-time
