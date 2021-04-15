@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Get current date-time
         id: date
-        run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -30,4 +30,4 @@ jobs:
         run: |
           comments="$GITHUB_API_URL"
           curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"$TIME\n$LABEL_NAME\"}" $URL
-          curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"$URL\", \"title\": \"$TITLE\", \"time\": \"$TIME\"}" -L $SPREAD_SHEET
+          curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"$URL\", \"title\": \"$TITLE\", \"label\": \"$LABEL_NAME\", \"time\": \"$TIME\"}" -L $SPREAD_SHEET
