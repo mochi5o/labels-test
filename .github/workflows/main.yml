@@ -24,6 +24,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           URL: ${{ github.event.issue.comments_url }}
           LABEL_NAME: ${{ github.event.label.name }}
+          TIME: ${{ steps.date.outputs.date }}
+          TITLE: ${{ github.event.title }}
+          SPREAD: "https://script.google.com/macros/s/AKfycbz5a3lNnO7snrqsJ3aWOfRJYXr5zRISaiYVcyvOCDAj7U29GKefhwjXnSBYXOL3gYk/exec"
         run: |
           comments="$GITHUB_API_URL"
-          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"${{ steps.date.outputs.date }}\n$LABEL_NAME\"}" ${URL}
+          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"${TIME}\n$LABEL_NAME\"}" ${URL}
+          curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"${URL}\", \"title\": \"${TITLE}\", "time": \"${TIME}\"}" -L ${SPREAD}
+          
