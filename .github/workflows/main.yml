@@ -1,10 +1,11 @@
+name: labels-test
 on:
   issues:
     types:
       ['labeled', 'unlabeled']
 
 jobs:
-  hello_world_job:
+  labeled-actions:
     runs-on: ubuntu-latest
     if: |
       (github.event.label.name == '対応中') || (github.event.label.name == '依頼中')
