@@ -19,5 +19,5 @@ jobs:
           URL: ${{ github.event.issue.url }}
           TITLE: ${{ github.event.issue.title }}
         run: |
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"Actions:シートに追加しました"}" $URL
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"Actions:シートに追加しました\"}" $URL
           curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"$URL\", \"title\": \"$TITLE\"}" -L ${{ secrets.SPREAD_SHEET }}
