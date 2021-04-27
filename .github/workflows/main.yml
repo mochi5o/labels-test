@@ -11,23 +11,9 @@ jobs:
       (github.event.label.name == '対応中') || (github.event.label.name == '依頼中')
     name: Recording label's add or remove time
     steps:
-      - name: Setup timezone
-        uses: zcong1993/setup-timezone@master
-        with:
-          timezone: Asia/Tokyo
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Get current date-time
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
-      - name: POST Comment
+      - name: POST data
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           URL: ${{ github.event.issue.url }}
-          LABEL_NAME: ${{ github.event.label.name }}
-          TIME: ${{ steps.date.outputs.date }}
           TITLE: ${{ github.event.issue.title }}
         run: |
-          comments="$GITHUB_API_URL"
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"$TIME\n$LABEL_NAME\"}" ${{ github.event.issue.comments_url }}
-          curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"$URL\", \"title\": \"$TITLE\", \"label\": \"$LABEL_NAME\", \"time\": \"$TIME\"}" -L ${{ secrets.SPREAD_SHEET }}
+          curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"$URL\", \"title\": \"$TITLE\" }" -L ${{ secrets.SPREAD_SHEET }}
