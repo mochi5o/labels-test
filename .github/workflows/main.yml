@@ -36,9 +36,9 @@ jobs:
                   }
                 ]
               },
-              "Tags": {
-                "type": "number",
-                "number": 600,
+              "URL": {
+                "type": "url",
+                "url": "http://mochiko.work",
               },
             }
           }
