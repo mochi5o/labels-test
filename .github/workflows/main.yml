@@ -27,20 +27,24 @@ jobs:
           {
             "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },
             "properties": {
-            "Name": {
-              "type": "title",
-              "title": [{ "text": { "content": "Tomatoes" } }]
-            },
-            "Tags": {
-              "type": "rich_text",
-              "rich_text": [ { "text": { "content": "Tomatoes" } } ]
-            },
+              "Name": {
+                "type": "title",
+                "title": [{ "text": { "content": "POST Data" } }]
+              },
+              "Tags": {
+                "type": "rich_text",
+                "rich_text": [ { "text": { "content": "actions" } } ]
+              },
+              "Price": {
+                "type": "number",
+                "number": 500
+              },
             }
           }
           EOF
           )
           curl -X POST "https://api.notion.com/v1/pages" \
-            -H "Authorization: Bearer ${{ github.event.issue.title }}" \
+            -H "Authorization: Bearer ${{ secrets.MY_NOTION_TOKEN }}" \
             -H "Content-type: application/json" \
             -H "Notion-Version: 2021-05-13" \
             -d "$data"
