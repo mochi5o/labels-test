@@ -38,10 +38,6 @@ jobs:
                   }
                 ]
               },
-              "Tag": {
-                "type": "number",
-                "number": 699,
-              },
             },
           }
           EOF
