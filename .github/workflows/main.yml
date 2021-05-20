@@ -22,8 +22,29 @@ jobs:
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          URL: ${{ github.event.issue.comments_url }}
+          URL: "https://script.google.com/macros/s/AKfycbyS3QI3H_JayXKdxKxe1fuReA_6JEfjOB-N811bNg/dev"
+          ISSUE_URL: ${{ github.event.issue.url }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
           LABEL_NAME: ${{ github.event.label.name }}
         run: |
           comments="$GITHUB_API_URL"
-          curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"${{ steps.date.outputs.date }}\n$LABEL_NAME\"}" ${URL}
+          # curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"${{ steps.date.outputs.date }}\n$LABEL_NAME\"}" ${URL}
+          # curl -X POST -F 'task=牛乳をあげる' -F 'status=in_progress' <発行したURL>
+          curl -X POST https://api.notion.com/v1/pages \
+            -H "Authorization: Bearer ${{ secrets.MY_NOTION_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -H "Notion-Version: 2021-05-13" \
+            --data '{
+              "parent": { "database_id": "${{ secrets.DATABASE_ID }}" },
+              "properties": {
+                "Name": {
+                  "title": [
+                    {
+                      "text": {
+                        "content": "${ISSUE_TITLE}"
+                      }
+                    }
+                  ]
+                },
+              }
+          }'
