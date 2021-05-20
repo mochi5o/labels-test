@@ -36,7 +36,7 @@ jobs:
                   }
                 ]
               },
-              "Tag": {
+              "Tags": {
                 "type": "number",
                 "number": 600,
               },
