@@ -16,10 +16,10 @@ jobs:
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          URL: ${{ github.event.issue.comments_url }}
           LABEL_NAME: ${{ github.event.label.name }}
           TITLE: ${{ github.event.issue.title }}
         run: |
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"ラベルが付きました\nラベル：　$LABEL_NAME\nタイトル：　$TITLE\"}" ${{ github.event.issue.comments_url }}
           data=$(cat <<EOF
           {
             "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },
@@ -54,5 +54,3 @@ jobs:
             -H "Content-type: application/json" \
             -H "Notion-Version: 2021-05-13" \
             -d "$data"
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"ラベルが付きました\nラベル：　$LABEL_NAME\nタイトル：　$TITLE\"}" $URL
-
