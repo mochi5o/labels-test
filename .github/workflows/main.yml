@@ -24,8 +24,8 @@ jobs:
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           TOKEN: ${{ secrets.MY_NOTION_TOKEN }}
         run: |
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"Actions:シートに追加しました\"}" $URL
-          curl -X POST https://api.notion.com/v1/pages \
+          # curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"Actions:シートに追加しました\"}" $URL
+          curl -X POST "https://api.notion.com/v1/pages" \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -H "Notion-Version: 2021-05-13" \
