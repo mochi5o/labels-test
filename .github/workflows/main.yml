@@ -32,18 +32,18 @@ jobs:
                 "title": [
                   {
                     "text": {
-                      "content": "$TITLE"
+                      "content": "TITLE"
                     }
                   }
                 ]
               },
               "URL": {
                 "type": "text",
-                "text": "$URL"
+                "text": "URL"
               },
               "Tag": {
                 "type": "text",
-                "text": "$LABEL_NAME"
+                "text": "LABEL_NAME"
               },
             }
           }
