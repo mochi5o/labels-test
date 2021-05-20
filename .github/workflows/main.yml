@@ -39,9 +39,11 @@ jobs:
               },
               "URL": {
                 "type": "text",
-                "text": {
-                  "content": "$URL"
-                }
+                "text": "$URL"
+              },
+              "Tag": {
+                "type": "text",
+                "text": "$LABEL_NAME"
               },
             }
           }
