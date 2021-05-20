@@ -22,7 +22,6 @@ jobs:
           URL: ${{ github.event.issue.url }}
           TITLE: ${{ github.event.issue.title }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
-          TOKEN: ${{ secrets.MY_NOTION_TOKEN }}
         run: |
           data=$(cat <<EOF
           {
@@ -36,7 +35,11 @@ jobs:
                     }
                   }
                 ]
-              }
+              },
+              "Tags": {
+                "type": "number",
+                "number": 600,
+              },
             }
           }
           EOF
