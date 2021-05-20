@@ -1,35 +1,28 @@
+name: labels-actions
 on:
   issues:
     types:
       ['labeled', 'unlabeled']
 
 jobs:
-  hello_world_job:
+  labeled-actions:
     runs-on: ubuntu-latest
     if: |
       (github.event.label.name == '対応中') || (github.event.label.name == '依頼中')
     name: Recording label's add or remove time
     steps:
-      - name: Setup timezone
-        uses: zcong1993/setup-timezone@master
-        with:
-          timezone: Asia/Tokyo
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Get current date-time
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y%m%d-%H%M%S')"
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          URL: "https://script.google.com/macros/s/AKfycbyS3QI3H_JayXKdxKxe1fuReA_6JEfjOB-N811bNg/dev"
           ISSUE_URL: ${{ github.event.issue.url }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
           LABEL_NAME: ${{ github.event.label.name }}
+          URL: ${{ github.event.issue.url }}
+          TITLE: ${{ github.event.issue.title }}
         run: |
           comments="$GITHUB_API_URL"
-          # curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" -d "{\"body\": \"${{ steps.date.outputs.date }}\n$LABEL_NAME\"}" ${URL}
-          # curl -X POST -F 'task=牛乳をあげる' -F 'status=in_progress' <発行したURL>
           curl -X POST https://api.notion.com/v1/pages \
             -H "Authorization: Bearer ${{ secrets.MY_NOTION_TOKEN }}" \
             -H "Content-Type: application/json" \
@@ -48,3 +41,5 @@ jobs:
                 },
               }
           }'
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"Actions:シートに追加しました\"}" $URL
+          # curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"$URL\", \"title\": \"$TITLE\"}" -L ${{ secrets.SPREAD_SHEET }}
