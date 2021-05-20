@@ -23,7 +23,6 @@ jobs:
           TITLE: ${{ github.event.issue.title }}
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
         run: |
-          comments="$GITHUB_API_URL"
           curl -X POST https://api.notion.com/v1/pages \
             -H "Authorization: Bearer ${{ secrets.MY_NOTION_TOKEN }}" \
             -H "Content-Type: application/json" \
@@ -35,7 +34,7 @@ jobs:
                   \"title\": [
                     {
                       \"text\": {
-                        "content": "$ISSUE_TITLE"
+                        \"content\": \"$ISSUE_TITLE\"
                       }
                     }
                   ]
