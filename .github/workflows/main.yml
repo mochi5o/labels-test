@@ -24,10 +24,27 @@ jobs:
           DATABASE_ID: ${{ secrets.DATABASE_ID }}
           TOKEN: ${{ secrets.MY_NOTION_TOKEN }}
         run: |
+            # data=$(cat <<EOF
+            # '{
+            #   "parent": { "database_id": "$DATABASE_ID" },
+            #   "properties": {
+            #     "Name": {
+            #       "title": [
+            #         {
+            #           "text": {
+            #             "content": "TEE"
+            #           }
+            #         }
+            #       ]
+            #     }
+            #   }
+            # }'
+            # EOF
+            # )
           # curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"Actions:シートに追加しました\"}" $URL
           curl -X POST "https://api.notion.com/v1/pages" \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -H "Notion-Version: 2021-05-13" \
-            --data "{\"parent\": { \"database_id\": \"$DATABASE_ID\" },\"properties\": {\"Name\": {\"title\": [{\"text\": {\"content\": \"$ISSUE_TITLE\"}}]},}}"
+            -d '{ "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },"properties": {"Name": {"title": [{"text": {"content": "test text"}}]},},}'
           # curl -X POST -H "Content-Type: application/json" -d "{\"url\": \"$URL\", \"title\": \"$TITLE\"}" -L ${{ secrets.SPREAD_SHEET }}
