@@ -17,26 +17,34 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.url }}
-          ISSUE_TITLE: ${{ github.event.issue.title }}
           LABEL_NAME: ${{ github.event.label.name }}
           TITLE: ${{ github.event.issue.title }}
-          DATABASE_ID: ${{ secrets.DATABASE_ID }}
         run: |
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"ラベルが付きました\nラベル：　$LABEL_NAME\nタイトル：　$TITLE\"}" $ISSUE_URL
           data=$(cat <<EOF
           {
             "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },
             "properties": {
               "Name": {
                 "type": "title",
-                "title": [{ "text": { "content": "$ISSUE_TITLE" } }]
-              },
-              "URL": {
-                "type": "rich_text",
-                "rich_text": [{ "text": { "content": "$URL" } }]
+                "title": [{ "text": { "content": "POST Data" } }]
               },
               "Tags": {
                 "type": "rich_text",
-                "rich_text": [{ "text": { "content": "$LABEL_NAME" } }]
+                "rich_text": [{ "text": { "content": "actions" } }]
+              },
+              "Price": {
+                "type": "number",
+                "number": 500
+              },
+              "Date": {
+                "type": "date",
+                "date": { "start": "2021-05-11" }
+              },
+              "Status": {
+                "select": {
+                  "name": "complete"
+                }
               }
             }
           }
