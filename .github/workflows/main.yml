@@ -16,11 +16,11 @@ jobs:
       - name: POST Comment
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          ISSUE_URL: ${{ github.event.issue.url }}
+          COMMENT_URL: ${{ github.event.issue.comments_url }}
           LABEL_NAME: ${{ github.event.label.name }}
           TITLE: ${{ github.event.issue.title }}
         run: |
-          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"ラベルが付きました\nラベル：　$LABEL_NAME\nタイトル：　$TITLE\"}" $ISSUE_URL
+          curl -X POST -H "Authorization: token $GITHUB_TOKEN" -d "{\"body\": \"ラベルが付きました\nラベル：　$LABEL_NAME\nタイトル：　$TITLE\"}" $COMMENT_URL
           data=$(cat <<EOF
           {
             "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },
