@@ -25,27 +25,22 @@ jobs:
         run: |
           data=$(cat <<EOF
           {
-            "parent": { "database_id": "$DATABASE_ID" },
+            "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },
             "properties": {
-              "Name": {
-                "title": [
-                  {
-                    "text": {
-                      "content": "TITLE"
-                    }
-                  }
-                ]
-              },
-              "URL": {
-                "type": "url",
-                "url": "http://mochiko.work",
-              },
+            "Name": {
+              "type": "title",
+              "title": [{ "text": { "content": "Tomatoes" } }]
+            },
+            "Tags": {
+              "type": "rich_text",
+              "rich_text": [ { "text": { "content": "Tomatoes" } } ]
+            },
             }
           }
           EOF
           )
           curl -X POST "https://api.notion.com/v1/pages" \
-            -H "Authorization: Bearer ${{ secrets.MY_NOTION_TOKEN }}" \
+            -H "Authorization: Bearer ${{ github.event.issue.title }}" \
             -H "Content-type: application/json" \
             -H "Notion-Version: 2021-05-13" \
-            -d "$data" \
+            -d "$data"
