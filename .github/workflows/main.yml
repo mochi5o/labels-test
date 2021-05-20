@@ -26,19 +26,18 @@ jobs:
         run: |
           data=$(cat <<EOF
           {
-            "parent": { "database_id": "dfc2cdc260ae476c8f2f5d4065f9a94a" },
+            "parent": { "database_id": "$DATABASE_ID" },
             "properties": {
               "Name": {
                 "title": [
                   {
-                    "type": "text",
                     "text": {
-                      "content": "TITLE"
+                      "content": "TEXT"
                     }
                   }
                 ]
-              },
-            },
+              }
+            }
           }
           EOF
           )
