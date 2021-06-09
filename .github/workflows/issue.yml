@@ -6,7 +6,13 @@ jobs:
   display:
     runs-on: ubuntu-latest
     steps:
-      - name: display
+      - name: labeled
         if: |
-          github.event.action == 'labeled' && contains(github.event.label.name, 'bug')
+         contains(github.event.label.name, 'bug') || contains(github.event.label.name, 'bug')
+      - name: reopend
+        if: |
+          github.event.action == 'reopened' && contains(github.event.issue.labels.*.name, 'bug')
+      - name: check
+        if: |
+          steps.labeled.conclusion == 'true' || steps.reopend.conclusion == 'true'
         run: echo 'run action!!'
