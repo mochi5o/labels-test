@@ -8,5 +8,5 @@ jobs:
     steps:
       - name: display
         if: |
-          contains(github.event.action, 'labeled') && contains(github.event.label.name, 'bug')
+          github.event.action == 'labeled' && contains(github.event.label.name, 'bug')
         run: echo 'run action!!'
