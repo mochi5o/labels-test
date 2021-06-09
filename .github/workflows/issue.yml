@@ -8,13 +8,5 @@ jobs:
     steps:
       - name: labeled
         if: |
-         contains(github.event.label.name, 'bug') || contains(github.event.label.name, 'bug')
-        run: echo 'labeled'
-      - name: reopend
-        if: |
-          github.event.action == 'reopened' && contains(github.event.issue.labels.*.name, 'bug')
-        run: echo 'reopened'
-      - name: check
-        if: |
-          steps.labeled.conclusion == 'true' || steps.reopend.conclusion == 'true'
+         (github.event.label.name == 'bug' && contains(github.event.label.name, 'bug')) || (github.event.action == 'reopened' && contains(github.event.issue.labels.*.name, 'bug'))
         run: echo 'run action!!'
