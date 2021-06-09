@@ -1,8 +1,9 @@
 name: Actions from issue
 
-on: 
+on:
   issues:
-    [labeled, reopened]
+    types:
+      [labeled, reopened]
 
 jobs:
   display:
